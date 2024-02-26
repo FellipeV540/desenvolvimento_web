@@ -1,0 +1,14 @@
+pagina de referencia python
+    https://www.python.org/
+        >Python é uma linguagem de programação fácil que nos ajudara a elaborar nossos sites
+pagina de referencia git
+    https://git-scm.com/
+        >Git será usado como uma ferramenta para salvar nosso trabalho e gerenciar tudo q envolve os arquivos
+         e versões dele
+pagina de referencia vscode
+    https://code.visualstudio.com/
+        >Vscode ou visualstudio da microsoft é um editor de texto que usaremos para escrever nossos programas
+         e onde vamos desenvolver nossos sites
+pagina de referencia sqlitebrowser
+    https://sqlitebrowser.org/
+        >Sqlite será o database que usaremos para nossas paginas da web
