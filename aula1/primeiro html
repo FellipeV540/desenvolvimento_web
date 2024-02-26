@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Documento de Teste</title>
+    <style>
+        p {
+            color: blue;
+        }
+    </style>
   </head>
   <body>
     <p>Esse é um documento de teste.</p>
