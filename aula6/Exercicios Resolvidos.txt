@@ -1,4 +1,4 @@
-1)
+
 1 - Melhor Organização do projeto, podendo ver todas as versoes desde sua criação ate o momento atual
 2 - A possibilidade de trabalhar em grupo, uma vez q podemos acessar as alterações de todos os usuarios
 
