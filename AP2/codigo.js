@@ -1,6 +1,7 @@
 import { hex_sha256 } from "./sha256-min.mjs";
 
-const alvo = '925b39018d531f8662562c4414602d86233fc07483b2440e15ec299e2333ca83'; /*Senha alvo com sal */
+console.log(hex_sha256('botafogo2024'))
+const alvo = '925b39018d531f8662562c4414602d86233fc07483b2440e15ec299e2333ca83'; /*Senha alvo com sal (botafogo2024) */
 const sal = 'botafogo'; /*sal da senha */
 
 if (localStorage.getItem('logado')){
@@ -8,8 +9,7 @@ if (localStorage.getItem('logado')){
     document.body.innerHTML = `
     <header style="background-color: grey; padding: 0.5em 1em; position: relative; display: flex; flex-direction: row;">
     <h1 style="color: white; margin: 0px; flex-grow: 1;">Atletas do possível campeão brasileiro 2024</h1>
-    <button id="logout" style="background-color: black; border: none; color: white; text-align: center; text-decoration: none; padding: 0.5em 1em; cursor: pointer;">Logout</button>
-    <button id="detalhesP" style="background-color: black; border: none; color: white; text-align: center; text-decoration: none; padding: 0.5em 1em; cursor: pointer;">Detalhes</button>
+    <button id="logout" style="background-color: black; border: none; border-radius: 0.5em; color: white; text-align: center; text-decoration: none; padding: 0.5em 1em; cursor: pointer;">Logout</button>
     </header>
     `;
 
@@ -17,10 +17,6 @@ if (localStorage.getItem('logado')){
     document.getElementById('logout').onclick = () => {
         localStorage.removeItem('logado');
         window.location.href = 'index.html';
-    }
-
-    document.getElementById('detalhesP').onclick = () => {
-        window.location.href = 'detalhes.html';
     }
 
     let dados;
@@ -42,6 +38,7 @@ if (localStorage.getItem('logado')){
     inputPesquisa.style.padding = '0.5em';
     inputPesquisa.style.width = '50%';
     inputPesquisa.style.maxWidth = '300px';
+    inputPesquisa.style.borderRadius = '0.5em';
 
     /*Cria div para os buttons */
     const divBotoes = document.createElement('div');
@@ -74,6 +71,7 @@ if (localStorage.getItem('logado')){
     buttonPesquisaT.style.cssText = `
     background-color: white;
     border: none;
+    border-radius: 0.5em;
     color: black;
     text-align: center;
     text-decoration: none;
@@ -88,6 +86,7 @@ if (localStorage.getItem('logado')){
     buttonPesquisaM.style.cssText = `
     background-color: white;
     border: none;
+    border-radius: 0.5em;
     color: black;
     text-align: center;
     text-decoration: none;
@@ -102,6 +101,7 @@ if (localStorage.getItem('logado')){
     buttonPesquisaF.style.cssText = `
     background-color: white;
     border: none;
+    border-radius: 0.5em;
     color: black;
     text-align: center;
     text-decoration: none;
@@ -132,21 +132,29 @@ if (localStorage.getItem('logado')){
     const montaCard = (entrada) => {
         const card = document.createElement('div');
         card.style.display = 'grid';
-        card.style.gridTemplateColumns = '1fr 2fr';
+        /*card.style.gridTemplateColumns = '1fr 2fr';*/
+        card.style.gridTemplateColumns = '1fr';
         card.style.gridTemplateAreas = `
+        "a1"
+        "a2"
+        "a3"
+        `
+        /*card.style.gridTemplateAreas = `
         "a1 a2"
         "a1 a3"
         "a4 a4"
         "a5 a5"
-        `;
-        card.style.width = '30rem';
+        `;*/
+        card.style.width = '20.4rem';
         card.style.border = 'solid';
-        card.style.padding = '.3rem';
+        card.style.padding = '.5rem';
         card.style.color = 'black';
         card.style.backgroundColor = 'white';
+        card.style.borderRadius = '1em';
 
         const imgContainer = document.createElement('div');
-        imgContainer.style.gridArea = 'a1';
+        imgContainer.style.gridArea = 'a2';
+        /*imgContainer.style.gridArea = 'a1';*/
         imgContainer.style.display = 'flex';
         imgContainer.style.alignItems = 'center';
         imgContainer.style.justifyContent = 'center';
@@ -155,17 +163,22 @@ if (localStorage.getItem('logado')){
         imagem.src = entrada.imagem;
         imagem.alt = `Foto de ${entrada.nome}`;
         imagem.style.objectFit = 'cover';
+        imagem.style.borderRadius = '0.5em';
 
         const posicao = document.createElement('p');
         posicao.innerHTML = entrada.posicao;
+        posicao.style.gridArea = 'a1'
+        /*grid-area: a2;*/
         posicao.style.cssText = `
-            grid-area: a2;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: top;
             text-transform: uppercase;
+            font-size: 35px;
+            margin: 0;
         `;
 
+        /*
         const nome = document.createElement('p');
         nome.innerHTML = entrada.nome;
         nome.style.gridArea = 'a3';
@@ -174,25 +187,58 @@ if (localStorage.getItem('logado')){
         nome.style.justifyContent = 'center';
         nome.style.fontWeight = 'bold';
         nome.style.visibility = 'hidden';
-
+        */
+        
+        /*
         const detalhes = document.createElement('p');
         detalhes.innerHTML = entrada.detalhes;
-        detalhes.style.gridArea = 'a4';
+        */
 
+        /*
         const nascimento = document.createElement('p');
         nascimento.innerHTML = entrada.nascimento;
         nascimento.style.gridArea = 'a5';
+        */
 
-        const id = document.createElement('p');
-        id.innerHTML = entrada.id
+       /*
+       const id = document.createElement('p');
+       id.innerHTML = entrada.id
+       */
+
+       const buttonDetalhes = document.createElement('button');
+        buttonDetalhes.id = 'saibaMais';
+        buttonDetalhes.innerHTML = 'Saiba Mais';
+        buttonDetalhes.style.gridArea = 'a3';
+        buttonDetalhes.style.backgroundColor = 'black';
+        buttonDetalhes.style.border = 'none';
+        buttonDetalhes.style.borderRadius = '0.5em';
+        buttonDetalhes.style.color = 'white';
+        buttonDetalhes.style.display = 'flex';
+        buttonDetalhes.style.justifyContent = 'center';
+        buttonDetalhes.style.alignItems = 'center';
+        buttonDetalhes.style.padding = '0.5em';
+        buttonDetalhes.style.width = '100px';
+        buttonDetalhes.style.cursor = 'pointer';
+        buttonDetalhes.style.margin = '5px';
+
+        buttonDetalhes.onclick = () => {
+            const jogadorId = entrada.id;
+            window.location.href = `detalhes.html?id=${jogadorId}`;
+        }
+        
+    
+        
 
         card.appendChild(imgContainer);
         imgContainer.appendChild(imagem);
         card.appendChild(posicao);
+        card.appendChild(buttonDetalhes);
+        /*
         card.appendChild(nome);
         card.appendChild(detalhes);
         card.appendChild(nascimento);
         card.appendChild(id);
+        */
 
         return card;
     }
@@ -261,7 +307,6 @@ else {
 
     document.getElementById('btn_login').onclick = () => {
         const entrada = document.getElementById('senha').value;
-        const mensagem = document.getElementById('mensagem');
         if (hex_sha256(entrada + sal) === alvo){
             localStorage.setItem('logado', 1);
             window.location.href = 'index.html'
