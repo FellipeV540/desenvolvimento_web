@@ -23,103 +23,117 @@ async function pegaDados(id) {
 // Função para montar o card com os dados do jogador
 function montaCard(entrada) {
     const card = document.createElement('div');
+    card.id = "cardD";
     card.style.display = 'grid';
-    card.style.gridTemplateColumns = '1fr 2fr';
-    card.style.gridTemplateAreas = `
-        "a1 a2"
-        "a1 a3"
-        "a4 a4"
-        "a5 a5"
-    `;
-    card.style.width = '30rem';
+    card.style.gridTemplateColumns = '30% 70%';  // Colunas para imagem e informações
+    card.style.gridAutoRows = 'auto';  // Altura automática baseada no conteúdo
     card.style.border = 'solid';
-    card.style.padding = '.3rem';
+    card.style.borderRadius = '0.5em';
+    card.style.borderWidth = '1px';
+    card.style.borderColor = '#ccc';
+    card.style.padding = '1rem';  // Padding do card
     card.style.color = 'black';
     card.style.backgroundColor = 'white';
+    card.style.maxWidth = '1200px';  // Largura máxima do card
+    card.style.margin = '20px auto';  // Margem para centralizar o card na página
 
-    const elenco = document.createElement('p');
-    elenco.innerHTML = `Elenco: ${entrada.elenco}`
-
+    // Container para a imagem do jogador
     const imgContainer = document.createElement('div');
-    imgContainer.style.gridArea = 'a1';
+    imgContainer.id = "imgContainerD";
     imgContainer.style.display = 'flex';
     imgContainer.style.alignItems = 'center';
     imgContainer.style.justifyContent = 'center';
+    imgContainer.style.overflow = 'hidden';  // Para garantir que a imagem não vaze para fora do container
 
     const imagem = document.createElement('img');
     imagem.src = entrada.imagem;
     imagem.alt = `Foto de ${entrada.nome}`;
-    imagem.style.objectFit = 'cover';
+    imagem.style.width = '100%';  // Ajusta para preencher o container
+    imagem.style.height = 'auto'; // Ajusta para manter a proporção da imagem
 
-    const n_jogos = document.createElement('p');
-    n_jogos.innerHTML = entrada.n_jogos
+    imgContainer.appendChild(imagem);
+
+    // Container para as informações do jogador
+    const infoContainer = document.createElement('div');
+    infoContainer.id = "infoContainerD";
+    infoContainer.style.padding = '0 1rem';  // Padding interno
+    infoContainer.style.display = 'flex';
+    infoContainer.style.flexDirection = 'column';
+    infoContainer.style.gap = '10px';
+
+    const n_jogos = document.createElement('p')
+    n_jogos.innerHTML = entrada.n_jogos.toLowerCase()
 
     const nome = document.createElement('p');
-    nome.innerHTML = entrada.nome;
-    nome.style.gridArea = 'a3';
-    nome.style.display = 'flex';
-    nome.style.alignItems = 'center';
-    nome.style.justifyContent = 'center';
-    nome.style.fontWeight = 'bold';
+    nome.innerHTML = `${entrada.nome}`;
+    nome.style.fontSize = '40px';  // Tamanho da fonte reduzido para o nome do jogador
+
+    const elenco = document.createElement('p');
+    elenco.innerHTML = `<strong>Elenco:</strong> ${entrada.elenco}`;
+    elenco.style.fontSize = '16px';  // Tamanho da fonte reduzido para outras informações
 
     const posicao = document.createElement('p');
-    posicao.innerHTML = `Posição: ${entrada.posicao}`;
-    posicao.style.cssText = `
-        grid-area: a2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-transform: uppercase;
-    `;
-
-    const naturalidade = document.createElement('p');
-    naturalidade.innerHTML = ` Naturalidade: ${entrada.naturalidade}`
-
-    const nascimento = document.createElement('p');
-    nascimento.innerHTML = `Data de Nascimento: ${entrada.nascimento}`;
-    nascimento.style.gridArea = 'a5';
-
-    const altura = document.createElement('p');
-    altura.innerHTML = `Altura: ${entrada.altura}`
+    posicao.innerHTML = `<strong>Posição:</strong> ${entrada.posicao}`;
+    posicao.style.fontSize = '16px';
 
     const no_botafogo_desde = document.createElement('p');
-    no_botafogo_desde.innerHTML = `No Botafogo Desde: ${entrada.no_botafogo_desde}`
+    no_botafogo_desde.innerHTML = `<strong>No Botafogo Desde:</strong> ${entrada.no_botafogo_desde}`;
+    no_botafogo_desde.style.fontSize = '16px';
+
+    const nascimento = document.createElement('p');
+    nascimento.innerHTML = `<strong>Data de Nascimento:</strong> ${entrada.nascimento}`;
+    nascimento.style.fontSize = '16px';
+
+    const altura = document.createElement('p');
+    altura.innerHTML = `<strong>Altura:</strong> ${entrada.altura}`;
+    altura.style.fontSize = '16px';
+
+    const naturalidade = document.createElement('p');
+    naturalidade.innerHTML = `<strong>Naturalidade:</strong> ${entrada.naturalidade}`;
+    naturalidade.style.fontSize = '16px';
 
     const detalhes = document.createElement('p');
     detalhes.innerHTML = entrada.detalhes;
-    detalhes.style.gridArea = 'a4';
+    detalhes.style.fontSize = '16px';
 
-    const buttonVoltar = document.createElement('button')
-    buttonVoltar.id = "btn_login"
-    buttonVoltar.innerHTML = "Voltar"
+    // Botão de voltar
+    const buttonVoltar = document.createElement('button');
+    buttonVoltar.id = "btn_login";  // Mantendo o ID para estilização CSS
+    buttonVoltar.innerHTML = "Voltar";
+    buttonVoltar.style.marginTop = '20px';  // Espaço acima do botão
+    buttonVoltar.style.justifySelf = 'center';  // Centraliza horizontalmente
 
     buttonVoltar.onclick = () => {
-        window.location.href = "index.html"
-    }
+        window.location.href = "index.html";
+    };
 
-    card.appendChild(elenco);
+    // Adiciona os elementos ao container de informações
+    infoContainer.appendChild(nome);
+    infoContainer.appendChild(elenco);
+    infoContainer.appendChild(posicao);
+    infoContainer.appendChild(n_jogos);
+    infoContainer.appendChild(no_botafogo_desde);
+    infoContainer.appendChild(nascimento);
+    infoContainer.appendChild(altura);
+    infoContainer.appendChild(naturalidade);
+    infoContainer.appendChild(detalhes);
+    infoContainer.appendChild(buttonVoltar);
+
+    // Adiciona os containers ao card na ordem desejada
     card.appendChild(imgContainer);
-    imgContainer.appendChild(imagem);
-    //card.appendChild(n_jogos);
-    card.appendChild(nome);
-    card.appendChild(posicao);
-    card.appendChild(naturalidade);
-    card.appendChild(nascimento);
-    card.appendChild(altura);
-    card.appendChild(no_botafogo_desde);
-    card.appendChild(detalhes);
-    card.appendChild(buttonVoltar);
+    card.appendChild(infoContainer);
 
     return card;
 }
+
 
 // Função principal para carregar os dados do jogador e exibir o card
 async function carregaDetalhes() {
     if (localStorage.getItem('logado')) {
         document.body.innerHTML = `
-        <header style="background-color: grey; padding: 0.5em 1em; position: relative; display: flex; flex-direction: row;">
-        <h1 style="color: white; margin: 0px; flex-grow: 1;">Detalhes do Atleta</h1>
-        <button id="logout" style="background-color: black; border: none; color: white; text-align: center; text-decoration: none; padding: 0.5em 1em; cursor: pointer;">Logout</button>
+        <header style="background-color: #5C5C5C; padding: 0.5em 1em; position: relative; display: flex; flex-direction: row; border-radius: 0.5em;">
+            <h1 style="color: white; margin: 0px; flex-grow: 1;">Detalhes do Atleta</h1>
+            <button id="logout" style="background-color: black; border: none; border-radius: 0.5em; color: white; text-align: center; text-decoration: none; padding: 0.5em 1em; cursor: pointer;">Logout</button>
         </header>
         `;
 
@@ -127,7 +141,7 @@ async function carregaDetalhes() {
             localStorage.removeItem('logado');
             localStorage.removeItem('jogadorDetalhes');
             window.location.href = 'index.html';
-        }
+        };
 
         const jogadorId = getJogadorIdFromUrl();
 

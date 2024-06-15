@@ -7,7 +7,7 @@ const sal = 'botafogo'; /*sal da senha */
 if (localStorage.getItem('logado')){
     /*Html da pagina se o usuario estiver logado, com header etc...*/
     document.body.innerHTML = `
-    <header style="background-color: grey; padding: 0.5em 1em; position: relative; display: flex; flex-direction: row;">
+    <header style="background-color: #5C5C5C; padding: 0.5em 1em; position: relative; display: flex; flex-direction: row; border-radius: 0.5em;">
     <h1 style="color: white; margin: 0px; flex-grow: 1;">Atletas do possível campeão brasileiro 2024</h1>
     <button id="logout" style="background-color: black; border: none; border-radius: 0.5em; color: white; text-align: center; text-decoration: none; padding: 0.5em 1em; cursor: pointer;">Logout</button>
     </header>
@@ -68,18 +68,12 @@ if (localStorage.getItem('logado')){
 
     /*Cria um button, que sera usado para filtrar para todos os jogadores */
     const buttonPesquisaT = document.createElement('button');
+    buttonPesquisaT.classList.add('filterButton'); // Adiciona classe base aos botões
     buttonPesquisaT.innerHTML = 'Todos';
-    buttonPesquisaT.onclick = () => atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/all");
-    buttonPesquisaT.style.cssText = `
-    background-color: white;
-    border: none;
-    border-radius: 0.5em;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    `;
+    buttonPesquisaT.onclick = () => {
+        atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/all");
+        buttonPesquisaT.classList.add('activeButton'); // Adiciona classe ao botão pressionado
+    };
 
     /*Cria um button, que sera usado para filtrar os jogadores masculinos*/
     const buttonPesquisaM = document.createElement('button');
@@ -205,85 +199,84 @@ if (localStorage.getItem('logado')){
         card.appendChild(buttonDetalhes);
 
         return card;
-    }
-
-    inputPesquisa.onkeyup = (ev) => {
-        const valorPesquisa = ev.target.value.toLowerCase();
-
-        if (valorPesquisa.length > 1){
-            const filtrado = dados.filter(
-                (elemento) => {
-                    const estaNoNome = elemento.nome.toLowerCase().includes(valorPesquisa)
-                    const estaNaPosicao = elemento.posicao.toLowerCase().includes(valorPesquisa)
-                    return estaNoNome || estaNaPosicao
-                }
-            );
-
-            conteudo.innerHTML = '';
-
-            filtrado.forEach(
-                (atleta) => (
-                    conteudo.appendChild(montaCard(atleta))
-                )
-            );
-        } else if (valorPesquisa.length === 0) {
-            conteudo.innerHTML = '';
-            dados.forEach(
-                (atleta) => (
-                    conteudo.appendChild(montaCard(atleta))
-                )
-            );
         }
-    }
 
-    const pegaDados = async(caminho) => {
-        const resposta = await fetch(caminho);
-        const dados = await resposta.json();
-        return dados;
-    }
+        inputPesquisa.onkeyup = (ev) => {
+            const valorPesquisa = ev.target.value.toLowerCase();
 
-    pegaDados("https://botafogo-atletas.mange.li/2024-1/all").then(
-        (entrada) => {
-            dados = entrada;
-            conteudo.innerHTML = '';
-            dados.forEach(
-                (atleta) => {
-                    conteudo.appendChild(montaCard(atleta))
-                }
-            )
-        });
+            if (valorPesquisa.length > 1){
+                const filtrado = dados.filter(
+                    (elemento) => {
+                        const estaNoNome = elemento.nome.toLowerCase().includes(valorPesquisa)
+                        const estaNaPosicao = elemento.posicao.toLowerCase().includes(valorPesquisa)
+                        return estaNoNome || estaNaPosicao
+                    }
+                );
 
-}
-else {
-    document.body.innerHTML = `
-    <div id="card">
-    <div id="card-content">
-      <div id="card-title">
-        <h2>LOGIN</h2>
-        <div class="underline-title"></div>
-      </div>
-      <form class="form">
-        <label for="senha" style="padding-top:22px">&nbsp;Senha</label>
-        <input id="senha" class="form-content" name="password" required />
-        <div class="form-border"></div>
-        <a href="#">
-          <legend id="senhaSite">A senha é botafogo2024</legend>
-        </a>
-        <input id="btn_login" type="submit" name="submit" value="LOGIN" />
-      </form>
-    </div>
-  </div>
-        `
+                conteudo.innerHTML = '';
 
-    document.getElementById('btn_login').onclick = () => {
-        const entrada = document.getElementById('senha').value;
-        if (hex_sha256(entrada + sal) === alvo){
-            localStorage.setItem('logado', 1);
-            window.location.href = 'index.html'
+                filtrado.forEach(
+                    (atleta) => (
+                        conteudo.appendChild(montaCard(atleta))
+                    )
+                );
+            } else if (valorPesquisa.length === 0) {
+                conteudo.innerHTML = '';
+                dados.forEach(
+                    (atleta) => (
+                        conteudo.appendChild(montaCard(atleta))
+                    )
+                );
+            }
+        }
+
+        const pegaDados = async(caminho) => {
+            const resposta = await fetch(caminho);
+            const dados = await resposta.json();
+            return dados;
+        }
+
+        pegaDados("https://botafogo-atletas.mange.li/2024-1/all").then(
+            (entrada) => {
+                dados = entrada;
+                conteudo.innerHTML = '';
+                dados.forEach(
+                    (atleta) => {
+                        conteudo.appendChild(montaCard(atleta))
+                    }
+                )
+            });
+
         } else {
-            alert('Senha incorreta');
+            document.body.innerHTML = `
+            <div id="card">
+            <div id="card-content">
+              <div id="card-title">
+                <h2>LOGIN</h2>
+                <div class="underline-title"></div>
+              </div>
+              <form class="form">
+                <label for="senha" style="padding-top:22px">&nbsp;Senha</label>
+                <input id="senha" class="form-content" name="password" required />
+                <div class="form-border"></div>
+                <a href="#">
+                  <legend id="senhaSite">A senha é botafogo2024</legend>
+                </a>
+                <input id="btn_login" type="submit" name="submit" value="LOGIN" />
+              </form>
+            </div>
+          </div>
+                `
+
+            document.getElementById('btn_login').onclick = () => {
+                const entrada = document.getElementById('senha').value;
+                if (hex_sha256(entrada + sal) === alvo){
+                    localStorage.setItem('logado', 1);
+                    window.location.href = 'index.html'
+                } else {
+                    alert('Senha incorreta');
+                }
+            }
         }
-    }
-}
 
 export default alvo;

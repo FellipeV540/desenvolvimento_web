@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&display=swap');
 
 @keyframes blink {
   0%{
@@ -12,11 +12,11 @@
 }
 
 p,a {
-  font-family: 'Neuton', serif;
+  font-family: "Archivo Black", sans-serif;
 }
 
 h1,h2,h3,h4,h5,h6{
-  font-family: 'Alumni Sans Inline One', sans-serif;
+  font-family: 'Anton', serif;
   font-weight: normal;
 }
 
@@ -43,6 +43,40 @@ h1,h2,h3,h4,h5,h6{
   #cards {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+@media screen and (max-width: 768px) {
+  #cardD {
+      display: grid;
+      grid-template-columns: 1fr; /* Apenas uma coluna para telas menores */
+      justify-items: center; /* Centraliza os itens horizontalmente */
+      align-items: center; /* Centraliza os itens verticalmente */
+      text-align: center; /* Centraliza o texto */
+      margin: 20px auto; /* Margem para centralizar na tela */
+      max-width: 90%; /* Largura máxima do card */
+      padding: 20px; /* Espaçamento interno */
+      border: 1px solid #ccc; /* Borda */
+      border-radius: 0.5em; /* Arredondamento da borda */
+      background-color: white; /* Cor de fundo */
+  }
+
+  #imgContainerD {
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* Manter o overflow hidden */
+}
+
+#infoContainerD {
+    grid-area: 2 / 1 / 3 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 }
 
 a {
@@ -104,6 +138,11 @@ label {
 #btn_login:hover {
   box-shadow: 0px 1px 18px #BC8422;
 }
+#logout:hover {
+  box-shadow: 0px 1px 18px #BC8422;
+}
+
+
 .form {
   align-items: left;
   display: flex;
@@ -129,4 +168,20 @@ label {
 
 #teste {
   color:white;
+}
+
+.filterButton {
+  background-color: white;
+  border: none;
+  border-radius: 0.5em;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+.activeButton {
+  background-color: #BC8422; /* Cor desejada quando o botão é pressionado */
+  color: white; /* Texto em branco para contraste */
 }
