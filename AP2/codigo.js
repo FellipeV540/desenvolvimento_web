@@ -45,11 +45,13 @@ if (localStorage.getItem('logado')){
     divBotoes.style.display = 'flex';
     divBotoes.style.gap = '10px';
 
+    //função para mostrar carregando apos o clique nos botoes
     const mostrarCarregando = () => {
         conteudo.innerHTML = 'Carregando...';
         conteudo.style.color = 'white';
     };
 
+    //função para atualizar o conteudo, pegando a API vinculada ao botao, e usando o PegaDados
     const atualizarConteudo = (caminho) => {
         mostrarCarregando();
         pegaDados(caminho).then(
@@ -120,11 +122,7 @@ if (localStorage.getItem('logado')){
     document.body.appendChild(divPesquisa);
 
     const conteudo = document.createElement('div');
-    conteudo.style.display = 'flex';
-    conteudo.style.flexWrap = 'wrap';
-    conteudo.style.justifyContent = 'center';
-    conteudo.style.alignItems = 'center';
-    conteudo.style.gap = '10px';
+    conteudo.id = 'cards';
     conteudo.innerHTML = 'carregando...';
 
     document.body.appendChild(conteudo);
@@ -132,29 +130,28 @@ if (localStorage.getItem('logado')){
     const montaCard = (entrada) => {
         const card = document.createElement('div');
         card.style.display = 'grid';
-        /*card.style.gridTemplateColumns = '1fr 2fr';*/
         card.style.gridTemplateColumns = '1fr';
         card.style.gridTemplateAreas = `
-        "a1"
-        "a2"
-        "a3"
-        `
-        /*card.style.gridTemplateAreas = `
-        "a1 a2"
-        "a1 a3"
-        "a4 a4"
-        "a5 a5"
-        `;*/
+            "a1"
+            "a2"
+            "a3"
+        `;
         card.style.width = '20.4rem';
         card.style.border = 'solid';
         card.style.padding = '.5rem';
         card.style.color = 'black';
         card.style.backgroundColor = 'white';
         card.style.borderRadius = '1em';
+        card.style.transition = 'transform 0.3s';
+        card.onmouseover = () => {
+            card.style.transform = 'scale(1.04)';
+        };
+        card.onmouseout = () => {
+            card.style.transform = 'scale(1)';
+        };
 
         const imgContainer = document.createElement('div');
         imgContainer.style.gridArea = 'a2';
-        /*imgContainer.style.gridArea = 'a1';*/
         imgContainer.style.display = 'flex';
         imgContainer.style.alignItems = 'center';
         imgContainer.style.justifyContent = 'center';
@@ -167,63 +164,34 @@ if (localStorage.getItem('logado')){
 
         const posicao = document.createElement('p');
         posicao.innerHTML = entrada.posicao;
-        posicao.style.gridArea = 'a1'
-        /*grid-area: a2;*/
-        posicao.style.cssText = `
-            display: flex;
-            align-items: center;
-            justify-content: top;
-            text-transform: uppercase;
-            font-size: 35px;
-            margin: 0;
-        `;
-
-        /*
-        const nome = document.createElement('p');
-        nome.innerHTML = entrada.nome;
-        nome.style.gridArea = 'a3';
-        nome.style.display = 'flex';
-        nome.style.alignItems = 'center';
-        nome.style.justifyContent = 'center';
-        nome.style.fontWeight = 'bold';
-        nome.style.visibility = 'hidden';
-        */
-
-        /*
-        const detalhes = document.createElement('p');
-        detalhes.innerHTML = entrada.detalhes;
-        */
-
-        /*
-        const nascimento = document.createElement('p');
-        nascimento.innerHTML = entrada.nascimento;
-        nascimento.style.gridArea = 'a5';
-        */
-
-       /*
-        const id = document.createElement('p');
-        id.innerHTML = entrada.id
-       */
+        posicao.style.gridArea = 'a1';
+        posicao.style.fontSize = '35px';
+        posicao.style.textAlign = 'center';
+        posicao.style.margin = '0';
 
         const buttonDetalhes = document.createElement('button');
-        buttonDetalhes.id = 'saibaMais';
+        buttonDetalhes.id = "saibaMais";
         buttonDetalhes.innerHTML = 'Saiba Mais';
-        buttonDetalhes.style.gridArea = 'a3';
-        buttonDetalhes.style.backgroundColor = 'black';
-        buttonDetalhes.style.border = 'none';
-        buttonDetalhes.style.borderRadius = '0.5em';
-        buttonDetalhes.style.color = 'white';
-        buttonDetalhes.style.display = 'flex';
-        buttonDetalhes.style.justifyContent = 'center';
-        buttonDetalhes.style.alignItems = 'center';
-        buttonDetalhes.style.padding = '0.5em';
-        buttonDetalhes.style.width = '100px';
-        buttonDetalhes.style.cursor = 'pointer';
-        buttonDetalhes.style.margin = '5px';
-
-        buttonDetalhes.onclick = () => {
-            localStorage.setItem('jogadorDetalhes', JSON.stringify(entrada));
-            window.location.href = `detalhes.html`;
+        buttonDetalhes.style.cssText = `
+            grid-area: 'a3';
+            background: black;
+            border: none;
+            border-radius: 21px;
+            box-shadow: 0px 1px 8px black;
+            cursor: pointer;
+            color: white;
+            font-family: "Raleway SemiBold", sans-serif;
+            height: 42.3px;
+            margin: 0 auto;
+            margin-top: 10px;
+            transition: 0.25s;
+            width: 153px;
+        `
+        buttonDetalhes.onmouseover = () => {
+            buttonDetalhes.style.boxShadow = "0px 1px 18px #BC8422";
+        }
+        buttonDetalhes.onmouseout = () => {
+            buttonDetalhes.style.boxShadow = "0px 1px 8px black";
         }
 
         buttonDetalhes.onclick = () => {
@@ -231,33 +199,25 @@ if (localStorage.getItem('logado')){
             window.location.href = `detalhes.html?id=${jogadorId}`;
         }
 
-
-
-
         card.appendChild(imgContainer);
         imgContainer.appendChild(imagem);
         card.appendChild(posicao);
         card.appendChild(buttonDetalhes);
-        /*card.appendChild(nome);
-        card.appendChild(detalhes);
-        card.appendChild(nascimento);
-        card.appendChild(id);*/
 
         return card;
     }
 
     inputPesquisa.onkeyup = (ev) => {
-        console.log(ev.target.value);
+        const valorPesquisa = ev.target.value.toLowerCase();
 
-        if (ev.target.value.length > 3){
-
+        if (valorPesquisa.length > 1){
             const filtrado = dados.filter(
                 (elemento) => {
-                    const estaNoNome = elemento.nome.toLowerCase().includes(ev.target.value.toLowerCase())
-                    const estaNaPosicao = elemento.posicao.toLowerCase().includes(ev.target.value.toLowerCase())
+                    const estaNoNome = elemento.nome.toLowerCase().includes(valorPesquisa)
+                    const estaNaPosicao = elemento.posicao.toLowerCase().includes(valorPesquisa)
                     return estaNoNome || estaNaPosicao
                 }
-            )
+            );
 
             conteudo.innerHTML = '';
 
@@ -265,7 +225,14 @@ if (localStorage.getItem('logado')){
                 (atleta) => (
                     conteudo.appendChild(montaCard(atleta))
                 )
-            )
+            );
+        } else if (valorPesquisa.length === 0) {
+            conteudo.innerHTML = '';
+            dados.forEach(
+                (atleta) => (
+                    conteudo.appendChild(montaCard(atleta))
+                )
+            );
         }
     }
 
@@ -297,7 +264,7 @@ else {
       </div>
       <form class="form">
         <label for="senha" style="padding-top:22px">&nbsp;Senha</label>
-        <input id="senha" class="form-content" type="password" name="password" required />
+        <input id="senha" class="form-content" name="password" required />
         <div class="form-border"></div>
         <a href="#">
           <legend id="senhaSite">A senha é botafogo2024</legend>

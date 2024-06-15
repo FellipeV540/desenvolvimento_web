@@ -1,7 +1,7 @@
 // Função para pegar o ID do jogador a partir da URL
 function getJogadorIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('id');
+    return parseInt(params.get('id'), 10);
 }
 
 // Função para buscar os dados do jogador pela URL da API
@@ -37,6 +37,9 @@ function montaCard(entrada) {
     card.style.color = 'black';
     card.style.backgroundColor = 'white';
 
+    const elenco = document.createElement('p');
+    elenco.innerHTML = `Elenco: ${entrada.elenco}`
+
     const imgContainer = document.createElement('div');
     imgContainer.style.gridArea = 'a1';
     imgContainer.style.display = 'flex';
@@ -48,15 +51,8 @@ function montaCard(entrada) {
     imagem.alt = `Foto de ${entrada.nome}`;
     imagem.style.objectFit = 'cover';
 
-    const posicao = document.createElement('p');
-    posicao.innerHTML = entrada.posicao;
-    posicao.style.cssText = `
-        grid-area: a2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-transform: uppercase;
-    `;
+    const n_jogos = document.createElement('p');
+    n_jogos.innerHTML = entrada.n_jogos
 
     const nome = document.createElement('p');
     nome.innerHTML = entrada.nome;
@@ -66,20 +62,53 @@ function montaCard(entrada) {
     nome.style.justifyContent = 'center';
     nome.style.fontWeight = 'bold';
 
+    const posicao = document.createElement('p');
+    posicao.innerHTML = `Posição: ${entrada.posicao}`;
+    posicao.style.cssText = `
+        grid-area: a2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+    `;
+
+    const naturalidade = document.createElement('p');
+    naturalidade.innerHTML = ` Naturalidade: ${entrada.naturalidade}`
+
+    const nascimento = document.createElement('p');
+    nascimento.innerHTML = `Data de Nascimento: ${entrada.nascimento}`;
+    nascimento.style.gridArea = 'a5';
+
+    const altura = document.createElement('p');
+    altura.innerHTML = `Altura: ${entrada.altura}`
+
+    const no_botafogo_desde = document.createElement('p');
+    no_botafogo_desde.innerHTML = `No Botafogo Desde: ${entrada.no_botafogo_desde}`
+
     const detalhes = document.createElement('p');
     detalhes.innerHTML = entrada.detalhes;
     detalhes.style.gridArea = 'a4';
 
-    const nascimento = document.createElement('p');
-    nascimento.innerHTML = entrada.nascimento;
-    nascimento.style.gridArea = 'a5';
+    const buttonVoltar = document.createElement('button')
+    buttonVoltar.id = "btn_login"
+    buttonVoltar.innerHTML = "Voltar"
 
+    buttonVoltar.onclick = () => {
+        window.location.href = "index.html"
+    }
+
+    card.appendChild(elenco);
     card.appendChild(imgContainer);
     imgContainer.appendChild(imagem);
-    card.appendChild(posicao);
+    //card.appendChild(n_jogos);
     card.appendChild(nome);
-    card.appendChild(detalhes);
+    card.appendChild(posicao);
+    card.appendChild(naturalidade);
     card.appendChild(nascimento);
+    card.appendChild(altura);
+    card.appendChild(no_botafogo_desde);
+    card.appendChild(detalhes);
+    card.appendChild(buttonVoltar);
 
     return card;
 }
@@ -102,7 +131,7 @@ async function carregaDetalhes() {
 
         const jogadorId = getJogadorIdFromUrl();
 
-        if (jogadorId > 60) {
+        if (isNaN(jogadorId) || jogadorId > 60 || jogadorId < 1) {
             document.body.innerHTML += `<p style="color: red; text-align: center; margin-top: 20px;">Erro ao carregar os dados do atleta.</p>`;
         } else {
             const jogador = await pegaDados(jogadorId);

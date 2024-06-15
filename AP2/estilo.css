@@ -20,8 +20,31 @@ h1,h2,h3,h4,h5,h6{
   font-weight: normal;
 }
 
+#cards {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+}
 
-/***/
+/* 2 cards por linha */
+@media screen and (min-width: 768px) {
+  #cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 4 cards por linha */
+@media screen and (min-width: 1024px) {
+  #cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 a {
   text-decoration: none;
 }
