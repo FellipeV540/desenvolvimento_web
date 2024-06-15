@@ -188,7 +188,7 @@ if (localStorage.getItem('logado')){
         nome.style.fontWeight = 'bold';
         nome.style.visibility = 'hidden';
         */
-        
+
         /*
         const detalhes = document.createElement('p');
         detalhes.innerHTML = entrada.detalhes;
@@ -201,11 +201,11 @@ if (localStorage.getItem('logado')){
         */
 
        /*
-       const id = document.createElement('p');
-       id.innerHTML = entrada.id
+        const id = document.createElement('p');
+        id.innerHTML = entrada.id
        */
 
-       const buttonDetalhes = document.createElement('button');
+        const buttonDetalhes = document.createElement('button');
         buttonDetalhes.id = 'saibaMais';
         buttonDetalhes.innerHTML = 'Saiba Mais';
         buttonDetalhes.style.gridArea = 'a3';
@@ -222,23 +222,26 @@ if (localStorage.getItem('logado')){
         buttonDetalhes.style.margin = '5px';
 
         buttonDetalhes.onclick = () => {
+            localStorage.setItem('jogadorDetalhes', JSON.stringify(entrada));
+            window.location.href = `detalhes.html`;
+        }
+
+        buttonDetalhes.onclick = () => {
             const jogadorId = entrada.id;
             window.location.href = `detalhes.html?id=${jogadorId}`;
         }
-        
-    
-        
+
+
+
 
         card.appendChild(imgContainer);
         imgContainer.appendChild(imagem);
         card.appendChild(posicao);
         card.appendChild(buttonDetalhes);
-        /*
-        card.appendChild(nome);
+        /*card.appendChild(nome);
         card.appendChild(detalhes);
         card.appendChild(nascimento);
-        card.appendChild(id);
-        */
+        card.appendChild(id);*/
 
         return card;
     }
