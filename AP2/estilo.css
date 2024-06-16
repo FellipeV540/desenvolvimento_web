@@ -45,38 +45,47 @@ h1,h2,h3,h4,h5,h6{
   }
 }
 
-@media screen and (max-width: 768px) {
+#cardD {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-auto-rows: auto;
+  border: solid;
+  border-radius: 0.5em;
+  border-width: 1px;
+  border-color: #ccc;
+  padding: 1rem;
+  color: black;
+  background-color: white;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+@media (max-width: 768px) {
   #cardD {
-      display: grid;
-      grid-template-columns: 1fr; /* Apenas uma coluna para telas menores */
-      justify-items: center; /* Centraliza os itens horizontalmente */
-      align-items: center; /* Centraliza os itens verticalmente */
-      text-align: center; /* Centraliza o texto */
-      margin: 20px auto; /* Margem para centralizar na tela */
-      max-width: 90%; /* Largura máxima do card */
-      padding: 20px; /* Espaçamento interno */
-      border: 1px solid #ccc; /* Borda */
-      border-radius: 0.5em; /* Arredondamento da borda */
-      background-color: white; /* Cor de fundo */
+    grid-template-columns: 1fr;
+    text-align: center; /* Centraliza texto e conteúdo */
   }
 
   #imgContainerD {
-    grid-area: 1 / 1 / 2 / 2;
+    order: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    overflow: hidden; /* Manter o overflow hidden */
-}
+  }
 
-#infoContainerD {
-    grid-area: 2 / 1 / 3 / 2;
+  #infoContainerD {
+    order: 2;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-}
+  }
+
+  #btn_login {
+    order: 3;
+    justify-self: center;
+    margin-top: 20px; /* Espaço acima do botão */
+  }
 }
 
 a {

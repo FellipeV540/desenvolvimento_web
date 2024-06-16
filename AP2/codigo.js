@@ -51,66 +51,55 @@ if (localStorage.getItem('logado')){
         conteudo.style.color = 'white';
     };
 
+    const setActiveButton = (button) => {
+        const buttons = document.querySelectorAll('.filterButton');
+        buttons.forEach(btn => btn.classList.remove('activeButton'));
+        button.classList.add('activeButton');
+    };
+
     //função para atualizar o conteudo, pegando a API vinculada ao botao, e usando o PegaDados
-    const atualizarConteudo = (caminho) => {
+    const atualizarConteudo = (caminho, button) => {
         mostrarCarregando();
-        pegaDados(caminho).then(
-            (entrada) => {
-                dados = entrada;
-                conteudo.innerHTML = '';
-                dados.forEach(
-                    (atleta) => {
-                        conteudo.appendChild(montaCard(atleta))
-                    }
-                )
+        pegaDados(caminho).then((entrada) => {
+            dados = entrada;
+            conteudo.innerHTML = '';
+            dados.forEach((atleta) => {
+                conteudo.appendChild(montaCard(atleta));
             });
+            setActiveButton(button);  // Define o botão ativo
+        });
     };
 
     /*Cria um button, que sera usado para filtrar para todos os jogadores */
     const buttonPesquisaT = document.createElement('button');
-    buttonPesquisaT.classList.add('filterButton'); // Adiciona classe base aos botões
-    buttonPesquisaT.innerHTML = 'Todos';
-    buttonPesquisaT.onclick = () => {
-        atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/all");
-        buttonPesquisaT.classList.add('activeButton'); // Adiciona classe ao botão pressionado
-    };
+buttonPesquisaT.classList.add('filterButton');
+buttonPesquisaT.innerHTML = 'Todos';
+buttonPesquisaT.onclick = () => {
+    atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/all", buttonPesquisaT);
+};
 
     /*Cria um button, que sera usado para filtrar os jogadores masculinos*/
     const buttonPesquisaM = document.createElement('button');
-    buttonPesquisaM.innerHTML = 'Masculino';
-    buttonPesquisaM.onclick = () => atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/masculino");
-    buttonPesquisaM.style.cssText = `
-    background-color: white;
-    border: none;
-    border-radius: 0.5em;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    `;
+buttonPesquisaM.classList.add('filterButton');
+buttonPesquisaM.innerHTML = 'Masculino';
+buttonPesquisaM.onclick = () => {
+    atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/masculino", buttonPesquisaM);
+};
 
     /*Cria um button, que sera usado para filtrar as jogadoras femininas*/
     const buttonPesquisaF = document.createElement('button');
-    buttonPesquisaF.innerHTML = 'Feminino';
-    buttonPesquisaF.onclick = () => atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/feminino");
-    buttonPesquisaF.style.cssText = `
-    background-color: white;
-    border: none;
-    border-radius: 0.5em;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    `;
+buttonPesquisaF.classList.add('filterButton');
+buttonPesquisaF.innerHTML = 'Feminino';
+buttonPesquisaF.onclick = () => {
+    atualizarConteudo("https://botafogo-atletas.mange.li/2024-1/feminino", buttonPesquisaF);
+};
 
     /*Coloca inputPesquisa e divBotoes (com buttons) dentro da divPesquisa */
     divPesquisa.appendChild(inputPesquisa);
-    divBotoes.appendChild(buttonPesquisaT);
-    divBotoes.appendChild(buttonPesquisaM);
-    divBotoes.appendChild(buttonPesquisaF);
-    divPesquisa.appendChild(divBotoes);
+divBotoes.appendChild(buttonPesquisaT);
+divBotoes.appendChild(buttonPesquisaM);
+divBotoes.appendChild(buttonPesquisaF);
+divPesquisa.appendChild(divBotoes);
 
     /*Coloca a divPesquisa dentro do body */
     document.body.appendChild(divPesquisa);
@@ -181,6 +170,11 @@ if (localStorage.getItem('logado')){
             transition: 0.25s;
             width: 153px;
         `
+        buttonDetalhes.onclick = () => {
+            const jogadorId = entrada.id;
+            window.location.href = `detalhes.html?id=${jogadorId}`;
+        }
+
         buttonDetalhes.onmouseover = () => {
             buttonDetalhes.style.boxShadow = "0px 1px 18px #BC8422";
         }
@@ -188,10 +182,6 @@ if (localStorage.getItem('logado')){
             buttonDetalhes.style.boxShadow = "0px 1px 8px black";
         }
 
-        buttonDetalhes.onclick = () => {
-            const jogadorId = entrada.id;
-            window.location.href = `detalhes.html?id=${jogadorId}`;
-        }
 
         card.appendChild(imgContainer);
         imgContainer.appendChild(imagem);
